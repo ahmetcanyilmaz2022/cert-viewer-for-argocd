@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/myuser/myrepo.git
+    targetRevision: HEAD
+    path: path/to/app
+  destination:
+    server: https://my-k8s-cluster
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
