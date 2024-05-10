@@ -1,0 +1,27 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  image: docker:stable
+  services:
+    - docker:dind
+  script:
+    - docker build -t myapp .
+    - docker tag myapp myregistry/myapp:latest
+    - docker push myregistry/myapp:latest
+
+test:
+  stage: test
+  image: myregistry/myapp:latest
+  script:
+    - pytest
+
+deploy:
+  stage: deploy
+  image: argoproj/argocd:v2
+  script:
+    - argocd app create myapp --repo https://github.com/myuser/myrepo.git --path path/to/app --dest-server https://my-k8s-cluster --dest-namespace default
+    - argocd app sync myapp
