@@ -5,7 +5,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/myuser/myrepo.git
+    repoURL: https://github.com/ahmetcanyilmaz2022/cert-viewer-for-argocd.git
     targetRevision: HEAD
     path: path/to/app
   destination:
